@@ -2,18 +2,29 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.MLAgents;
+using Unity.MLAgents.Sensors;
 
-public class Ai : MonoBehaviour
+public class Ai : Agent
 {
-    // Start is called before the first frame update
-    void Start()
+    public RayPerceptionSensorComponent3D targets;
+
+    void Start(){
+        targets = GetComponent<RayPerceptionSensorComponent3D>();
+    }
+    public override void OnEpisodeBegin(){
+
+        
+
+    }
+
+    public override void CollectObservations(VectorSensor sensor)
     {
+        base.CollectObservations(sensor);
         
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+
+
+    
 }
