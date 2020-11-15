@@ -35,8 +35,10 @@ public class Ai : Agent
         this.gameObject.transform.position = baseTransform.position;
         this.transform.rotation = baseTransform.rotation;
 
-        objCube.transform.position = objCubeTransform.position;
-        objCube.transform.rotation = objCubeTransform.rotation;
+        Instantiate(objCube, objCubeTransform.position, Quaternion.identity);
+
+        //objCube.transform.position = objCubeTransform.position;
+        //objCube.transform.rotation = objCubeTransform.rotation;
 
         Transform mainOjbtransform = mainObj.transform;
 
