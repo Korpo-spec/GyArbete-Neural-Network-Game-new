@@ -8,7 +8,7 @@ public class objective : MonoBehaviour
     public Material targetMaterial;
     int amountOfPartsFound = 0;
 
-
+    public bool hasreturnedThing;
     private void OnTriggerEnter(Collider other) {
         
         if (other.gameObject.tag == "pickup")
@@ -18,7 +18,7 @@ public class objective : MonoBehaviour
 
             motorMesh.material = targetMaterial;
             amountOfPartsFound++;
-            
+            hasreturnedThing = true;
         }
     }
 }

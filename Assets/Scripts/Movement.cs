@@ -14,21 +14,30 @@ public class Movement : MonoBehaviour
         
     }
 
+    float movementX;
+    float movementY;
     // Update is called once per frame
     void Update()
     {
-        float movementY = Input.GetAxisRaw("Horizontal") * rotationSpeed * Time.deltaTime;
-        float movementX = Input.GetAxisRaw("Vertical") * movementSpeed * Time.deltaTime;
+        movementY = Input.GetAxisRaw("Horizontal") * rotationSpeed * Time.deltaTime;
+        movementX = Input.GetAxisRaw("Vertical") * movementSpeed * Time.deltaTime;
 
-        transform.Rotate(new Vector3(0, movementY, 0));
+        
 
-        Vector3 direction = transform.forward;
-        direction.y = 0;
-        direction.Normalize();
-        transform.Translate(direction * movementX ,Space.World);
+        
         //transform.Translate();
         
         
+    }
+
+    public void Rotate(int roatation){
+        transform.Rotate(new Vector3(0, roatation, 0));
+    }
+    public void Walk(int directionn){
+        Vector3 direction = transform.forward;
+        direction.y = 0;
+        direction.Normalize();
+        transform.Translate(direction * directionn ,Space.World);
     }
 
     
