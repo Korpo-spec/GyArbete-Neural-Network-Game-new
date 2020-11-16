@@ -5,7 +5,7 @@ using UnityEngine;
 public class pickupStuff : MonoBehaviour
 {
 
-    GameObject theMap;
+    public GameObject theMap;
     float timer;
     // Start is called before the first frame update
     void Start()
@@ -58,6 +58,7 @@ public class pickupStuff : MonoBehaviour
     public bool isSomethingPickedup;
     public bool Pickup(){
         if(timer> 0.2f && isCollidingWithCube && !isSomethingPickedup){
+
             collidingObj.gameObject.GetComponent<BoxCollider>().isTrigger = true;
             
 

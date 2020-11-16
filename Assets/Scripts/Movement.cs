@@ -24,6 +24,8 @@ public class Movement : MonoBehaviour
 
         
 
+        Walk((int)movementX);
+        Rotate((int)movementY);
         
         //transform.Translate();
         
@@ -31,13 +33,13 @@ public class Movement : MonoBehaviour
     }
 
     public void Rotate(int roatation){
-        transform.Rotate(new Vector3(0, roatation, 0));
+        transform.Rotate(new Vector3(0, roatation * rotationSpeed, 0));
     }
     public void Walk(int directionn){
         Vector3 direction = transform.forward;
         direction.y = 0;
         direction.Normalize();
-        transform.Translate(direction * directionn ,Space.World);
+        transform.Translate(direction * directionn * movementSpeed ,Space.World);
     }
 
     
