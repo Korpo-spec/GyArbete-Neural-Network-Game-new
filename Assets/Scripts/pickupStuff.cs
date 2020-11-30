@@ -57,7 +57,7 @@ public class pickupStuff : MonoBehaviour
 
     public bool isSomethingPickedup;
     public bool Pickup(){
-        if(timer> 0.2f && isCollidingWithCube && !isSomethingPickedup){
+        if(timer> 0.2f && isCollidingWithCube && !isSomethingPickedup && collidingObj != null){
 
             collidingObj.gameObject.GetComponent<BoxCollider>().isTrigger = true;
             

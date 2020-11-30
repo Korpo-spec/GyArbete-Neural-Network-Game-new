@@ -764,8 +764,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6706225479837666964}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -0.17656, y: 0, z: -0.36443}
+  m_LocalScale: {x: 3.1896, y: 1, z: 1.2544}
   m_Children: []
   m_Father: {fileID: 7970261721724506154}
   m_RootOrder: 5
@@ -795,6 +795,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: daee117cac6b1204a904f6cf2897e2ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  theMap: {fileID: 0}
+  isCollidingWithCube: 0
+  collidingObj: {fileID: 0}
+  isSomethingPickedup: 0
 --- !u!1 &7074264505603846491
 GameObject:
   m_ObjectHideFlags: 0

@@ -69,10 +69,11 @@ public class Ai : Agent
     public override void CollectObservations(VectorSensor sensor)
     {
         
-        sensor.AddObservation(targets);
-        sensor.AddObservation(obstacles);
+        //sensor.AddObservation(targets);
+        //sensor.AddObservation(obstacles);
         sensor.AddObservation(mainObj.transform.position);
-        sensor.AddObservation(this.transform.rotation);
+        sensor.AddObservation(this.transform.rotation.y);
+        sensor.AddObservation(this.transform.position);
         sensor.AddObservation(pickupStuffScript.GetComponent<pickupStuff>().isSomethingPickedup);
         
     }
@@ -107,7 +108,7 @@ public class Ai : Agent
             bool pickup = pickupStuffScript.GetComponent<pickupStuff>().Pickup();
             //Debug.Log("ran");
             if(pickup){
-                SetReward(0.3f);
+                SetReward(1);
                 Debug.Log("added reward");
             }
             pickup = false;
@@ -116,14 +117,16 @@ public class Ai : Agent
 
         if (mainObj.GetComponent<objective>().hasreturnedThing)
         {
-            SetReward(1.0f);
+            SetReward(3.0f);
+            AddReward((timer/30));
             Debug.Log("has returned");
             EndEpisode();
         }
 
         if (wallcollision)
         {
-            SetReward(-1f);
+            Debug.Log("Wall hit");
+            AddReward(-1f);
             EndEpisode();
         }
 
