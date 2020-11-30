@@ -154,7 +154,15 @@ public class Ai : Agent
     }
 
     public override void Heuristic(float[] actionsOut){
-
+        actionsOut[0] = Input.GetAxisRaw("Horizontal") + 1;
+        actionsOut[1] = Input.GetAxisRaw("Vertical");
+        
+        if(Input.GetKey(KeyCode.Space)){
+            actionsOut[2] = 1;
+        }
+        else{
+            actionsOut[2] = 0;
+        }
     }
 
     private bool wallcollision;
