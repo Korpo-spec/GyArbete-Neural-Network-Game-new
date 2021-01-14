@@ -46,13 +46,19 @@ public class Ai : Agent
             
             pickupObj = Instantiate(objCube, objCubeTransform.position, Quaternion.identity);
             pickupObj.name = "obj cube";
+            
             Debug.Log(pickupObj);
             
 
 
             pickupObj.transform.parent = pickupStuffScript.GetComponent<pickupStuff>().theMap.transform;
+            //pickupObj.transform.SetParent(pickupStuffScript.GetComponent<pickupStuff>().theMap.transform, false);
         }
         
+        pickupStuffScript.GetComponent<pickupStuff>().isSomethingPickedup = false;
+        pickupStuffScript.GetComponent<pickupStuff>().objectInHand.GetComponent<MeshRenderer>().material = pickupStuffScript.GetComponent<pickupStuff>().nothingMaterial;
+        pickupStuffScript.GetComponent<pickupStuff>().objectInHand.GetComponent<BoxCollider>().isTrigger = true;
+
         originalDistance = Vector3.Distance(mainObj.transform.position, pickupObj.transform.position);
         
         //objCube.transform.position = objCubeTransform.position;
@@ -108,7 +114,7 @@ public class Ai : Agent
             bool pickup = pickupStuffScript.GetComponent<pickupStuff>().Pickup();
             //Debug.Log("ran");
             if(pickup){
-                SetReward(1);
+                AddReward(0.5f);
                 Debug.Log("added reward");
             }
             pickup = false;
@@ -165,7 +171,7 @@ public class Ai : Agent
         }
     }
 
-    private bool wallcollision;
+    public bool wallcollision;
     private void OnCollisionEnter(Collision other) {
         if (other.gameObject.tag == "Wall")
         {

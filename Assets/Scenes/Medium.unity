@@ -229,7 +229,7 @@ MonoBehaviour:
     VectorActionSpaceType: 0
   m_Model: {fileID: 5022602860645237092, guid: da1fd272e252afd45a5354380eb23ab3, type: 3}
   m_InferenceDevice: 0
-  m_BehaviorType: 0
+  m_BehaviorType: 1
   m_BehaviorName: Gyarbete
   TeamId: 0
   m_UseChildSensors: 1

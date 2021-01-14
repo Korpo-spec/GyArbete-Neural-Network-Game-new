@@ -16,17 +16,17 @@ public class pickupStuff : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown("space")&&timer > 0.2f){
+        /*if (Input.GetKeyDown("space")&&timer > 0.2f){
             if(transform.childCount > 0){
                 
             }
-        }   
+        }   */
         timer += Time.deltaTime;
     }
 
 
     private void OnTriggerStay(Collider other) {
-        
+        /*
         if (Input.GetKeyDown("space")&&timer > 0.2f && other.tag == "pickup")
         {   
             
@@ -39,6 +39,7 @@ public class pickupStuff : MonoBehaviour
             
             
         }
+        */
 
     }
     public bool isCollidingWithCube;
@@ -56,28 +57,63 @@ public class pickupStuff : MonoBehaviour
     }
 
     public bool isSomethingPickedup;
-    public bool Pickup(){
-        if(timer> 0.2f && isCollidingWithCube && !isSomethingPickedup && collidingObj != null){
 
-            collidingObj.gameObject.GetComponent<BoxCollider>().isTrigger = true;
-            
+    public GameObject objectInHand;
+    public Material targetMaterial;
+    public Material nothingMaterial;
+    public bool Pickup(){
+        if(timer> 0.3f && isCollidingWithCube && !isSomethingPickedup && collidingObj != null){
+
+            //collidingObj.gameObject.GetComponent<BoxCollider>().isTrigger = true;
+            Destroy(collidingObj);
 
             timer = 0;
+            objectInHand.GetComponent<MeshRenderer>().material = targetMaterial;
+            objectInHand.GetComponent<BoxCollider>().isTrigger = false;
+            
+            gameObject.tag="pickup";
+            
+
+            isSomethingPickedup = true;
+            
+            /*
+            Vector3 originalScale = collidingObj.transform.localScale;
            
             collidingObj.transform.parent = this.transform;
+            collidingObj.transform.localScale = originalScale;
             isSomethingPickedup = true;
+            
+            collidingObj.name = "pickedup obj cube";
+            */
             if(collidingObj.name == "obj cube"){
-                collidingObj.name = "pickedup obj cube";
                 return true; 
             }
             
+            
+            
         }
-        else if(isSomethingPickedup && timer > 0.2f){
-
+        else if(isSomethingPickedup && timer > 0.3f){
+            /*
             foreach(Transform child in transform){
+                Vector3 originalScale = child.transform.localScale;
                 child.transform.parent = theMap.transform;
+                child.transform.localScale = originalScale;
                 child.gameObject.GetComponent<BoxCollider>().isTrigger = false;
             }
+            */
+            GameObject newObj =Instantiate(objectInHand, objectInHand.transform);
+            
+            newObj.transform.parent = theMap.transform;
+            newObj.tag = "pickup";
+            newObj.gameObject.name = "pickedup obj cube";
+            
+            newObj.transform.localScale =new Vector3(3.2488f,3.2488f,3.2488f);
+            newObj.transform.Translate(new Vector3(0,-2f, 0));
+            objectInHand.GetComponent<MeshRenderer>().material = nothingMaterial;
+            objectInHand.GetComponent<BoxCollider>().isTrigger = true;
+            
+            gameObject.tag="no";
+            
             timer = 0;
 
             isSomethingPickedup = false;

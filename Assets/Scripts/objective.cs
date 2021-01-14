@@ -13,12 +13,15 @@ public class objective : MonoBehaviour
         
         if (other.gameObject.tag == "pickup")
         {
-            Destroy(other.gameObject);
+            
             MeshRenderer motorMesh = motorThings[amountOfPartsFound].GetComponent<MeshRenderer>();
 
             motorMesh.material = targetMaterial;
             amountOfPartsFound++;
             hasreturnedThing = true;
+            other.gameObject.tag = "no";
         }
     }
+
+    
 }
