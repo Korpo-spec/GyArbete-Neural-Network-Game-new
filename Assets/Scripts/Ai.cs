@@ -1,7 +1,9 @@
-﻿using System.Globalization;
+﻿using System.Net.Mime;
+using System.Globalization;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using Unity.MLAgents;
 using Unity.MLAgents.Sensors;
 
@@ -21,6 +23,8 @@ public class Ai : Agent
     public GameObject objCube;
 
     public GameObject pickupObj;
+    private float reward = 0;
+    public Text rewardobj;
     float timer = 0;
     public override void Initialize(){
         targets = GetComponents<RayPerceptionSensorComponent3D>()[1];
@@ -70,7 +74,21 @@ public class Ai : Agent
 
         mainObj = Instantiate(MainObjprefab, mainOjbtransform.position, Quaternion.identity);
 
+        
+        if (reward > highscore)
+        {
+            highscore= reward;
+        }
+        Debug.Log(reward);
+        rewardobj.text = "Reward: " + reward;
+        reward = 0;
+
+        timer = 0;
+
+
     }
+
+    public float highscore = 0;
     float originalDistance;
     public override void CollectObservations(VectorSensor sensor)
     {
@@ -84,12 +102,14 @@ public class Ai : Agent
         
     }
 
-    
+    bool firstTime = true;
+    public int amountfirstreturned = 0;
     public override void OnActionReceived(float[] vectorAction){
 
         if(this.transform.position.y < 11){
-            SetReward(-0.4f);
+            AddReward(-0.4f);
             Debug.Log("fell off");
+            reward = GetCumulativeReward();
             EndEpisode();
         }
         //Debug.Log(vectorAction[0]-1);
@@ -123,9 +143,17 @@ public class Ai : Agent
 
         if (mainObj.GetComponent<objective>().hasreturnedThing)
         {
-            SetReward(3.0f);
-            AddReward((timer/30));
+            AddReward(3.0f);
+            AddReward(2*(2/timer));
             Debug.Log("has returned");
+            reward = GetCumulativeReward();
+            if(firstTime)
+            {
+                amountfirstreturned = CompletedEpisodes;
+
+                firstTime = false;
+            }
+            Debug.Log("returned" + CompletedEpisodes);
             EndEpisode();
         }
 
@@ -133,6 +161,7 @@ public class Ai : Agent
         {
             Debug.Log("Wall hit");
             AddReward(-1f);
+            reward = GetCumulativeReward();
             EndEpisode();
         }
 
@@ -143,21 +172,24 @@ public class Ai : Agent
         if(timer > 30){
             float dist = Vector3.Distance(mainObj.transform.position, pickupObj.transform.position);
             if(originalDistance < dist){
-                SetReward(-0.5f);
+                AddReward(-0.5f);
                 Debug.Log("further away");
             }
             else{
-                SetReward(1f - dist/originalDistance);
+                AddReward(1f - dist/originalDistance);
                 Debug.Log(1f - dist/originalDistance);
             }
             
             timer = 0;
             Debug.Log("timer ending");
+            reward = GetCumulativeReward();
             EndEpisode();
         }
 
         
     }
+    
+    
 
     public override void Heuristic(float[] actionsOut){
         actionsOut[0] = Input.GetAxisRaw("Horizontal") + 1;
